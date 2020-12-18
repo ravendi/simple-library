@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simplelibrary/screens/home/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +15,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Container(),
+      home: Home(
+
+      ),
     );
   }
 }
