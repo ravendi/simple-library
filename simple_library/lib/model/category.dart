@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
 class Category extends Equatable {
   final String name;
 
-  Category(this.name);
+  Category({@required this.name});
 
   @override
   List<Object> get props => [name];

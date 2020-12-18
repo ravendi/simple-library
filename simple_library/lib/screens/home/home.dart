@@ -11,6 +11,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<MainBloc>(context).add(GetBooksRequested());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<MainBloc, MainState>(
