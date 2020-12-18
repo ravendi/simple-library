@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simplelibrary/database/local_storage_database.dart';
 import 'package:simplelibrary/screens/home/home.dart';
+import 'package:simplelibrary/screens/main_bloc/bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,8 +17,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(
-
+      home: BlocProvider(
+        create: (context) => MainBloc(
+          database: LocalStorageDatabase()
+        ),
+        child: Home(),
       ),
     );
   }
