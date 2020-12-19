@@ -13,6 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Simple Library',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.black
+      ),
       home: BlocProvider(
         create: (context) => MainBloc(
           database: LocalStorageDatabase()

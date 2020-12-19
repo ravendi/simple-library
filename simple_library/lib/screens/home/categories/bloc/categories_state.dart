@@ -16,8 +16,9 @@ class InitialCategoriesState extends CategoriesState {
 class ShouldNavigateToConcreteCategory extends CategoriesState {
   final Category category;
   final List<Book> books;
+  final List<CategoryItem> currentCategoryItems;
 
-  ShouldNavigateToConcreteCategory({@required this.category, @required this.books});
+  ShouldNavigateToConcreteCategory({@required this.category, @required this.books, @required this.currentCategoryItems});
 
   @override
   List<Object> get props => [category, books];

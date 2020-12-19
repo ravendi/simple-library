@@ -9,6 +9,7 @@ import './bloc.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   final List<Book> books;
+  List<CategoryItem> _categoryItems;
 
   CategoriesBloc({@required this.books});
 
@@ -26,28 +27,28 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       }
       categories = LinkedHashSet<Category>.from(categories).toList();
 
-      List<CategoryItem> categoryItems = [];
+      _categoryItems = [];
       for (var category in categories) {
         final booksForCategory = books
             .where((element) => element.categories.contains(category))
             .toList();
-        categoryItems.add(CategoryItem(
+        _categoryItems.add(CategoryItem(
             category: category,
             books: booksForCategory,
             countInfo: booksForCategory == null || booksForCategory.isEmpty
                 ? '-'
                 : '${booksForCategory.length}'));
 
-        yield DidGetCategoryItems(categoryItems: categoryItems);
+        yield DidGetCategoryItems(categoryItems: _categoryItems);
       }
     } else if (event is NavigateToConcreteCategoryRequested) {
       final booksForCategory =
-          books.where((element) => element.categories.contains(event.category));
+          books.where((element) => element.categories.contains(event.category)).toList();
       if (booksForCategory == null || booksForCategory.isEmpty) {
         yield NoBooksInCategory();
       } else {
         yield ShouldNavigateToConcreteCategory(
-            category: event.category, books: booksForCategory);
+            category: event.category, books: booksForCategory, currentCategoryItems: _categoryItems);
       }
     }
   }
