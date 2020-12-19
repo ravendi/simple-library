@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:simplelibrary/model/book.dart';
 import 'package:simplelibrary/model/category.dart';
 
 abstract class CategoriesEvent extends Equatable {

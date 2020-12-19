@@ -36,7 +36,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
             books: booksForCategory,
             countInfo: booksForCategory == null || booksForCategory.isEmpty
                 ? '-'
-                : booksForCategory.length));
+                : '${booksForCategory.length}'));
+
+        yield DidGetCategoryItems(categoryItems: categoryItems);
       }
     } else if (event is NavigateToConcreteCategoryRequested) {
       final booksForCategory =

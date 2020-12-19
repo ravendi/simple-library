@@ -13,10 +13,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Simple Library',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
       home: BlocProvider(
         create: (context) => MainBloc(
           database: LocalStorageDatabase()
