@@ -5,8 +5,9 @@ class SimpleLibraryText extends StatelessWidget {
   final String text;
   final Color color;
   final double fontSize;
+  final FontStyle fontStyle;
 
-  const SimpleLibraryText({Key key, this.text, this.fontSize = 20, this.color = AppColors.primaryText}) : super(key: key);
+  const SimpleLibraryText({Key key, this.text, this.fontSize = 20, this.fontStyle, this.color = AppColors.primaryText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +17,7 @@ class SimpleLibraryText extends StatelessWidget {
         fontFamily: 'Satisfy',
         color: color,
         fontSize: fontSize,
+        fontStyle: fontStyle
       ),
     );
   }

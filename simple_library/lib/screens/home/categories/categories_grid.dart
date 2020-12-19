@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simplelibrary/model/book.dart';
+import 'package:simplelibrary/screens/books/bloc/bloc.dart';
 import 'package:simplelibrary/screens/books/book_list.dart';
 import 'package:simplelibrary/screens/home/categories/bloc/bloc.dart';
 import 'package:simplelibrary/screens/home/categories/category_item.dart';
@@ -40,11 +41,12 @@ class _CategoriesGridState extends State<CategoriesGrid> {
       },
       listener: (_, state) {
         if (state is ShouldNavigateToConcreteCategory) {
+          final destination = BlocProvider(
+              create: (_) => BookListBloc(),
+              child: BookList(books: state.books, category: state.category));
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BookList(
-                      books: state.books, category: state.category))).then((_) {
+                  context, MaterialPageRoute(builder: (context) => destination))
+              .then((_) {
             BlocProvider.of<CategoriesBloc>(context)
                 .add(GetCategoryItemsRequested());
           });

@@ -29,8 +29,8 @@ class CategoryItemTile extends StatelessWidget {
               padding: const EdgeInsets.only(right: 15, top: 15),
               child: SimpleLibraryText(
                 text: categoryItem.countInfo,
-                color: AppColors.secondaryText,
-                fontSize: 20,
+                color: AppColors.secondaryText.withOpacity(0.5),
+                fontSize: 30,
               ),
             ),
           ),

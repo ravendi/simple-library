@@ -42,13 +42,16 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         yield DidGetCategoryItems(categoryItems: _categoryItems);
       }
     } else if (event is NavigateToConcreteCategoryRequested) {
-      final booksForCategory =
-          books.where((element) => element.categories.contains(event.category)).toList();
+      final booksForCategory = books
+          .where((element) => element.categories.contains(event.category))
+          .toList();
       if (booksForCategory == null || booksForCategory.isEmpty) {
         yield NoBooksInCategory();
       } else {
         yield ShouldNavigateToConcreteCategory(
-            category: event.category, books: booksForCategory, currentCategoryItems: _categoryItems);
+            category: event.category,
+            books: booksForCategory,
+            currentCategoryItems: _categoryItems);
       }
     }
   }
