@@ -20,6 +20,6 @@ class Book extends Equatable {
 
   Map<String, dynamic> toJson() => {
     'name': name,
-    'categories': categories?.map((el) => el.toJson())?.toList()
+    'categories': categories?.map((el) => el?.toJson())?.toList()
   };
 }

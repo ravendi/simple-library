@@ -4,14 +4,17 @@ import 'package:simplelibrary/constants/app_colors.dart';
 import 'package:simplelibrary/custom_widgets/simple_library_text.dart';
 import 'package:simplelibrary/model/book.dart';
 import 'package:simplelibrary/model/category.dart';
+import 'package:simplelibrary/screens/books/add_new_book.dart';
 import 'package:simplelibrary/screens/books/bloc/bloc.dart';
 import 'package:simplelibrary/screens/books/book_list_element.dart';
+import 'package:simplelibrary/screens/main_bloc/bloc.dart';
+import 'package:simplelibrary/screens/main_bloc/main_bloc.dart';
 
 class BookList extends StatefulWidget {
-  final List<Book> books;
-  final Category category;
+  List<Book> books;
+  Category category;
 
-  const BookList({Key key, @required this.books, @required this.category})
+  BookList({Key key, @required this.books, @required this.category})
       : super(key: key);
 
   @override
@@ -30,25 +33,78 @@ class _BookListState extends State<BookList> {
           color: AppColors.mainText,
         ),
       ),
-      body: BlocConsumer<BookListBloc, BookListState>(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.separator,
+        child: Icon(Icons.add),
+        onPressed: () {
+          BlocProvider.of<BookListBloc>(context)
+              .add(DidPressAddNewBook(category: widget.category));
+        },
+      ),
+      body: BlocConsumer<MainBloc, MainState>(
+        listener: (_, state) {
+          if (state is DidAddBook) {
+            BlocProvider.of<BookListBloc>(context).add(ReloadBooksInCurrentCategory(category: widget.category, allBooks: state.allBooks));
+          } else if (state is DidRemoveBook) {
+            BlocProvider.of<BookListBloc>(context).add(ReloadBooksInCurrentCategory(category: widget.category, allBooks: state.allBooks));
+          }
+        },
         builder: (_, state) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(25, 30, 15, 0),
-            child: SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: widget.books
-                    .map((element) => Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: BookListElement(book: element),
-                        ))
-                    .toList(),
-              ),
-            ),
+          return BlocConsumer<BookListBloc, BookListState>(
+            builder: (_, state) {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(25, 30, 15, 0),
+                child: _list(widget.books),
+              );
+            },
+            listener: (ctx, state) {
+              if (state is BooksLoaded) {
+                widget.books = state.books;
+              } else if (state is ShouldShowAddNewBookBottomSheet) {
+                _showAddNewBookBottomSheet(ctx);
+              }
+            },
           );
         },
-        listener: (_, state) {},
       ),
     );
+  }
+
+  Widget _list(List<Book> books) {
+    return SingleChildScrollView(
+      physics: ClampingScrollPhysics(),
+      child: Column(
+        children: books
+            .map((element) => Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: BookListElement(book: element),
+                ))
+            .toList(),
+      ),
+    );
+  }
+
+  void _showAddNewBookBottomSheet(BuildContext ctx) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SingleChildScrollView(
+            child: Container(
+              color: Colors.black,
+              padding: EdgeInsets.only(
+                  top: 15,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: AddNewBook(
+                  category: widget.category,
+                  onAddNewBookPressed: (book) {
+                    BlocProvider.of<MainBloc>(ctx)
+                        .add(AddBookRequested(book: book));
+                  }),
+            ),
+          );
+        }).then((_) {
+      BlocProvider.of<BookListBloc>(context)
+          .add(DidFinishProcessOfAddingNewBook());
+    });
   }
 }

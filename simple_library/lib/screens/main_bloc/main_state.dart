@@ -37,7 +37,7 @@ class DidAddBook extends MainState {
   DidAddBook({@required this.book, @required this.allBooks});
 
   @override
-  List<Object> get props => [book];
+  List<Object> get props => [book, allBooks];
 }
 
 class LoadingBooks extends MainState {

@@ -7,6 +7,7 @@ import 'package:simplelibrary/screens/books/book_list.dart';
 import 'package:simplelibrary/screens/home/categories/bloc/bloc.dart';
 import 'package:simplelibrary/screens/home/categories/category_item.dart';
 import 'package:simplelibrary/screens/home/categories/category_item_tile.dart';
+import 'package:simplelibrary/screens/main_bloc/bloc.dart';
 
 class CategoriesGrid extends StatefulWidget {
   final List<Book> books;
@@ -44,8 +45,9 @@ class _CategoriesGridState extends State<CategoriesGrid> {
           final destination = BlocProvider(
               create: (_) => BookListBloc(),
               child: BookList(books: state.books, category: state.category));
+          final mainBloc = BlocProvider.value(value: BlocProvider.of<MainBloc>(context), child: destination);
           Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => destination))
+                  context, MaterialPageRoute(builder: (context) => mainBloc))
               .then((_) {
             BlocProvider.of<CategoriesBloc>(context)
                 .add(GetCategoryItemsRequested());

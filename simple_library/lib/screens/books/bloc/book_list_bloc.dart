@@ -10,6 +10,15 @@ class BookListBloc extends Bloc<BookListEvent, BookListState> {
   Stream<BookListState> mapEventToState(
     BookListEvent event,
   ) async* {
-    // TODO: Add Logic
+    if (event is DidPressAddNewBook) {
+      yield ShouldShowAddNewBookBottomSheet(category: event.category);
+    } else if (event is DidFinishProcessOfAddingNewBook) {
+      yield InitialBookListState();
+    } else if (event is ReloadBooksInCurrentCategory) {
+      final booksForCategory = event.allBooks
+          .where((element) => element.categories.contains(event.category))
+          .toList();
+      yield BooksLoaded(booksForCategory);
+    }
   }
 }

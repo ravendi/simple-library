@@ -7,9 +7,9 @@ import 'package:simplelibrary/model/category.dart';
 
 class LocalStorageDatabase implements Database {
   final _localStorage = SharedPreferences.getInstance();
-  
+
   final _booksKey = 'books';
-  
+
   @override
   Future<void> saveBook({Book book}) async {
     final books = await getAllBooks();
@@ -29,7 +29,8 @@ class LocalStorageDatabase implements Database {
     if (encodedData == null || encodedData.isEmpty) {
       return _predefinedBooks();
     }
-    final List<Book> books = jsonDecode(encodedData);
+    final List booksJson = jsonDecode(encodedData);
+    final List<Book> books = booksJson.map((e) => Book.fromJson(e)).toList();
     return books;
   }
 
@@ -62,12 +63,16 @@ class LocalStorageDatabase implements Database {
       Book(name: 'Book3', categories: [categories[3]]),
       Book(name: 'Book4', categories: [categories[0], categories[1]]),
       Book(name: 'Book5', categories: [categories[1], categories[2]]),
-      Book(name: 'Book6', categories: [categories[5], categories[6], categories[7]]),
+      Book(
+          name: 'Book6',
+          categories: [categories[5], categories[6], categories[7]]),
       Book(name: 'Book7', categories: [categories[4], categories[5]]),
       Book(name: 'Book8', categories: [categories[0]]),
       Book(name: 'Book9', categories: [categories[6]]),
       Book(name: 'Book10', categories: [categories[2], categories[4]]),
-      Book(name: 'Book11', categories: [categories[0], categories[1], categories[5]]),
+      Book(
+          name: 'Book11',
+          categories: [categories[0], categories[1], categories[5]]),
       Book(name: 'Book12', categories: [categories[2], categories[3]]),
       Book(name: 'Book13', categories: [categories[7]]),
       Book(name: 'Book14', categories: [categories[5], categories[6]]),
