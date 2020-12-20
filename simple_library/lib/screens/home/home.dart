@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simplelibrary/constants/app_colors.dart';
+import 'package:simplelibrary/custom_widgets/simple_library_app_bar.dart';
 import 'package:simplelibrary/custom_widgets/simple_library_text.dart';
 import 'package:simplelibrary/model/book.dart';
 import 'package:simplelibrary/screens/home/categories/bloc/bloc.dart';
@@ -23,14 +24,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.separator,
-        title: SimpleLibraryText(
-          text: 'Categories',
-          fontSize: 23,
-          color: AppColors.mainText,
-        ),
+      appBar: SimpleLibraryAppBar(
+        title: 'Categories',
       ),
       body: BlocBuilder<MainBloc, MainState>(
         builder: (context, state) {

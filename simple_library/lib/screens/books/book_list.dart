@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simplelibrary/constants/app_colors.dart';
+import 'package:simplelibrary/custom_widgets/simple_library_app_bar.dart';
 import 'package:simplelibrary/custom_widgets/simple_library_text.dart';
 import 'package:simplelibrary/model/book.dart';
 import 'package:simplelibrary/model/category.dart';
@@ -26,15 +27,7 @@ class _BookListState extends State<BookList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.separator,
-        title: SimpleLibraryText(
-          text: widget.category.name,
-          fontSize: 23,
-          color: AppColors.mainText,
-        ),
-      ),
+      appBar: SimpleLibraryAppBar(title: widget.category.name),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.separator,
         child: Icon(Icons.add),
