@@ -42,7 +42,7 @@ class AddNewBook extends StatelessWidget {
                     })
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 70),
             TextFormField(
               controller: _textEditingController,
               autofocus: true,
@@ -50,7 +50,7 @@ class AddNewBook extends StatelessWidget {
                   hintText: 'Name of the book...', hintStyle: _textStyle),
               style: _textStyle,
             ),
-            SizedBox(height: 50)
+            SizedBox(height: 20)
           ],
         ),
       ),

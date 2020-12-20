@@ -26,6 +26,7 @@ class _BookListState extends State<BookList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: AppColors.separator,
         title: SimpleLibraryText(
           text: widget.category.name,
@@ -86,6 +87,8 @@ class _BookListState extends State<BookList> {
 
   void _showAddNewBookBottomSheet(BuildContext ctx) {
     showModalBottomSheet(
+      backgroundColor: Colors.black,
+        isScrollControlled: true,
         context: context,
         builder: (context) {
           return SingleChildScrollView(
