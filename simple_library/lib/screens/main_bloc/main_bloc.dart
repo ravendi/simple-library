@@ -18,8 +18,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   Stream<MainState> mapEventToState(
     MainEvent event,
   ) async* {
+    yield LoadingBooks();
     if (event is GetBooksRequested) {
-      yield LoadingBooks();
       // Fake delay
       await Future.delayed(Duration(seconds: 2));
       books = await database.getAllBooks();

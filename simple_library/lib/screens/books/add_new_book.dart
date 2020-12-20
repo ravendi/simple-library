@@ -35,15 +35,15 @@ class AddNewBook extends StatelessWidget {
                 _button(
                     title: 'add',
                     onPressed: () {
-                      Navigator.of(context).pop();
-                      onAddNewBookPressed(Book(
-                          name: _textEditingController.text,
-                          categories: [category]));
+                      onBookNamePicked(context, _textEditingController.text);
                     })
               ],
             ),
             SizedBox(height: 70),
             TextFormField(
+              onFieldSubmitted: (bookName) {
+                onBookNamePicked(context, bookName);
+              },
               controller: _textEditingController,
               autofocus: true,
               decoration: InputDecoration(
@@ -69,6 +69,12 @@ class AddNewBook extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onBookNamePicked(BuildContext context, String name) {
+    Navigator.of(context).pop();
+    onAddNewBookPressed(Book(name: name,
+        categories: [category]));
   }
 
   TextStyle get _textStyle => TextStyle(

@@ -16,7 +16,11 @@ class DidPressAddNewBook extends BookListEvent {
   List<Object> get props => [category];
 }
 
-class DidFinishProcessOfAddingNewBook extends BookListEvent {
+class RemoveBookInitiated extends BookListEvent {
+  final Book book;
+
+  RemoveBookInitiated(this.book);
+
   @override
   List<Object> get props => [];
 }

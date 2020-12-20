@@ -7,6 +7,7 @@ import 'package:simplelibrary/model/category.dart';
 import 'package:simplelibrary/screens/books/add_new_book.dart';
 import 'package:simplelibrary/screens/books/bloc/bloc.dart';
 import 'package:simplelibrary/screens/books/book_list_element.dart';
+import 'package:simplelibrary/screens/books/remove_book_dialog.dart';
 import 'package:simplelibrary/screens/main_bloc/bloc.dart';
 import 'package:simplelibrary/screens/main_bloc/main_bloc.dart';
 
@@ -45,9 +46,13 @@ class _BookListState extends State<BookList> {
       body: BlocConsumer<MainBloc, MainState>(
         listener: (_, state) {
           if (state is DidAddBook) {
-            BlocProvider.of<BookListBloc>(context).add(ReloadBooksInCurrentCategory(category: widget.category, allBooks: state.allBooks));
+            BlocProvider.of<BookListBloc>(context).add(
+                ReloadBooksInCurrentCategory(
+                    category: widget.category, allBooks: state.allBooks));
           } else if (state is DidRemoveBook) {
-            BlocProvider.of<BookListBloc>(context).add(ReloadBooksInCurrentCategory(category: widget.category, allBooks: state.allBooks));
+            BlocProvider.of<BookListBloc>(context).add(
+                ReloadBooksInCurrentCategory(
+                    category: widget.category, allBooks: state.allBooks));
           }
         },
         builder: (_, state) {
@@ -63,6 +68,8 @@ class _BookListState extends State<BookList> {
                 widget.books = state.books;
               } else if (state is ShouldShowAddNewBookBottomSheet) {
                 _showAddNewBookBottomSheet(ctx);
+              } else if (state is ShouldShowRemoveDialog) {
+                _showRemoveBookDialog(ctx, state.book);
               }
             },
           );
@@ -78,7 +85,12 @@ class _BookListState extends State<BookList> {
         children: books
             .map((element) => Padding(
                   padding: const EdgeInsets.only(bottom: 20),
-                  child: BookListElement(book: element),
+                  child: BookListElement(
+                      book: element,
+                      onRemoveInitiated: (book) {
+                        BlocProvider.of<BookListBloc>(context)
+                            .add(RemoveBookInitiated(book));
+                      }),
                 ))
             .toList(),
       ),
@@ -87,7 +99,7 @@ class _BookListState extends State<BookList> {
 
   void _showAddNewBookBottomSheet(BuildContext ctx) {
     showModalBottomSheet(
-      backgroundColor: Colors.black,
+        backgroundColor: Colors.black,
         isScrollControlled: true,
         context: context,
         builder: (context) {
@@ -95,8 +107,7 @@ class _BookListState extends State<BookList> {
             child: Container(
               color: Colors.black,
               padding: EdgeInsets.only(
-                  top: 15,
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
+                  top: 15, bottom: MediaQuery.of(context).viewInsets.bottom),
               child: AddNewBook(
                   category: widget.category,
                   onAddNewBookPressed: (book) {
@@ -105,9 +116,16 @@ class _BookListState extends State<BookList> {
                   }),
             ),
           );
-        }).then((_) {
-      BlocProvider.of<BookListBloc>(context)
-          .add(DidFinishProcessOfAddingNewBook());
-    });
+        });
+  }
+
+  void _showRemoveBookDialog(BuildContext ctx, Book book) {
+    showDialog(
+        context: context,
+        child: RemoveBookDialog(
+            title: 'Do you want to remove this book from your Library?',
+            onContinuePressed: () {
+              BlocProvider.of<MainBloc>(ctx).add(RemoveBookRequested(book: book));
+            }));
   }
 }

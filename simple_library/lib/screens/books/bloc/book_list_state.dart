@@ -21,6 +21,15 @@ class ShouldShowAddNewBookBottomSheet extends BookListState {
   List<Object> get props => [category];
 }
 
+class ShouldShowRemoveDialog extends BookListState {
+  final Book book;
+
+  ShouldShowRemoveDialog(this.book);
+
+  @override
+  List<Object> get props => [book];
+}
+
 class BooksLoaded extends BookListState {
   final List<Book> books;
 
@@ -29,4 +38,9 @@ class BooksLoaded extends BookListState {
   @override
   List<Object> get props => [books];
 
+}
+
+class BookListLoading extends BookListState {
+  @override
+  List<Object> get props => [];
 }
