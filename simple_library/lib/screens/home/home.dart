@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:simplelibrary/constants/app_colors.dart';
 import 'package:simplelibrary/custom_widgets/simple_library_app_bar.dart';
-import 'package:simplelibrary/custom_widgets/simple_library_text.dart';
 import 'package:simplelibrary/model/book.dart';
 import 'package:simplelibrary/screens/home/categories/bloc/bloc.dart';
 import 'package:simplelibrary/screens/home/categories/categories_grid.dart';

@@ -25,11 +25,11 @@ class RemoveBookInitiated extends BookListEvent {
   List<Object> get props => [];
 }
 
-class ReloadBooksInCurrentCategory extends BookListEvent {
+class ReloadBooksInCurrentCategoryRequested extends BookListEvent {
   final Category category;
   final List<Book> allBooks;
 
-  ReloadBooksInCurrentCategory({@required this.category, @required this.allBooks});
+  ReloadBooksInCurrentCategoryRequested({@required this.category, @required this.allBooks});
 
   @override
   List<Object> get props => [category, allBooks];

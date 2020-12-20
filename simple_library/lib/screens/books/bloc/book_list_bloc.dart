@@ -13,7 +13,7 @@ class BookListBloc extends Bloc<BookListEvent, BookListState> {
     yield BookListLoading();
     if (event is DidPressAddNewBook) {
       yield ShouldShowAddNewBookBottomSheet(category: event.category);
-    } else if (event is ReloadBooksInCurrentCategory) {
+    } else if (event is ReloadBooksInCurrentCategoryRequested) {
       final booksForCategory = event.allBooks
           .where((element) => element.categories.contains(event.category))
           .toList();

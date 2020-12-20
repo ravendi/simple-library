@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simplelibrary/constants/app_colors.dart';
 import 'package:simplelibrary/custom_widgets/simple_library_app_bar.dart';
-import 'package:simplelibrary/custom_widgets/simple_library_text.dart';
 import 'package:simplelibrary/model/book.dart';
 import 'package:simplelibrary/model/category.dart';
 import 'package:simplelibrary/screens/books/add_new_book.dart';
@@ -40,11 +39,11 @@ class _BookListState extends State<BookList> {
         listener: (_, state) {
           if (state is DidAddBook) {
             BlocProvider.of<BookListBloc>(context).add(
-                ReloadBooksInCurrentCategory(
+                ReloadBooksInCurrentCategoryRequested(
                     category: widget.category, allBooks: state.allBooks));
           } else if (state is DidRemoveBook) {
             BlocProvider.of<BookListBloc>(context).add(
-                ReloadBooksInCurrentCategory(
+                ReloadBooksInCurrentCategoryRequested(
                     category: widget.category, allBooks: state.allBooks));
           }
         },
